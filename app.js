@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 const Listing = require("./models/listing.js");
+const path = require("path");
 main().then(() => {
     console.log("connected to DB");
 }).catch((err) => {
@@ -11,22 +12,29 @@ main().then(() => {
 async function main() {
     await mongoose.connect(MONGO_URL);
 }
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 app.get("/", (req, res)=> {
     res.send("Hi I am root");
 });
-app.get("/testListing", async (req, res) =>{
-let sampleListing = new Listing({
-    title: "My Home",
-    description: "By the beach",
-    price: 100,
-    location: "Azamgarh",
-    country: "India",
+app.get("/listings", async (req, res)=>{
+  const allListings =  await Listing.find({});
+  res.render("listings/index.ejs", {allListings});
+    });
 
-});
-await sampleListing.save();
-console.log("sample was saved");
-res.send("successfull testing");
-});
+// app.get("/testListing", async (req, res) =>{
+// let sampleListing = new Listing({
+//     title: "My Home",
+//     description: "By the beach",
+//     price: 100,
+//     location: "Azamgarh",
+//     country: "India",
+
+// });
+// await sampleListing.save();
+// console.log("sample was saved");
+// res.send("successfull testing");
+// });
 
 app.listen(8080, () => {
 console.log("App is listening to port 8080");
