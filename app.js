@@ -32,6 +32,7 @@ let {id} = req.params;
  const listing = await Listing.findById(id);
  res.render("listings/show.ejs", {listing});
 });
+//create route
 
 // app.get("/testListing", async (req, res) =>{
 // let sampleListing = new Listing({
