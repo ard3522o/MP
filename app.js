@@ -25,6 +25,7 @@ app.get("/", (req, res)=> {
 });
 app.get("/listings", async (req, res)=>{
   const allListings =  await Listing.find({});
+  
  // console.log(allListings.map(l => l.image)); 
   res.render("listings/index.ejs", {allListings});
     });
