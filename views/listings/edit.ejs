@@ -6,21 +6,43 @@
     <title>Wanderlust</title>
 </head>
 <body>
+    <div class="row">
+        <div class="col-8 offset-2">
     <h3>Edit your Listing</h3>
    <form method="POST" action="/listings/<%= listing._id %>?_method=PUT">
+    <div>
+        <label for="title" class="form-label">Title</label>
     <input  name="listing[title]" value="<%= listing.title %>" type="text">
+    </div>
     <br>
+    <div>
+        <label for="description" class="form-label">Description</label>
      <textarea  name="listing[description]" ><%= listing.description %></textarea>
+     </div>
      <br>
+     <div>
+        <label for="image" class="form-label">Image link</label>
      <input type="text" name="listing[image]" value="<%= listing.image %>">
+     </div>
      <br>
+<div>
+<label for="price" class="form-label">Price</label>
       <input type="number" name="listing[price]" value="<%= listing.price %>">
+      </div>
       <br>
-      <input type="text" name="listing[location]" value="<%= listing.location %>">
+      <div>
+      <label for="location" class="form-label">Location</label>
+        <input type="text" name="listing[location]" value="<%= listing.location %>">
+        </div>
       <br>
+      <div>
+        <label for="country" class="form-label">Country</label>
       <input type="text" name="listing[country]" value="<%= listing.country %>">
+      </div>
    <br>
    <button>Edit</button>
     </form>
+</div>    
+</div>
 </body>
 </html>
