@@ -6,11 +6,13 @@
     <div>
     <label for="title" class="form-label">Title</label>
     <input type="text" name="listing[title]" placeholder="enter title" class="form-control" required>
-    </div>
+<div class="valid-feedback">Title looks good</div>    
+</div>
     <br>
     <div>
     <label for="description" class="form-label">Description</label>
-    <textarea  name="listing[description]" class="form-control" ></textarea>
+    <textarea  name="listing[description]" class="form-control" required></textarea>
+     <div class="invalid-feedback">Please enter a short description</div> 
     </div> 
     <br>
     <div>
@@ -20,17 +22,20 @@
      <br>
      <div>
      <label for="price" class="form-label">Price</label>
-      <input type="number" name="listing[price]" placeholder="enter price" required>
-      </div>
+      <input  name="listing[price]" placeholder="enter price" class="form-control" required>
+      <div class="invalid-feedback">Price enter valid price</div>
+    </div>
       <br>
       <div>
       <label for="location" class="form-label">Location</label>
-      <input type="text" name="listing[location]" placeholder="enter location" required>
-      </div>
+      <input type="text" name="listing[location]" placeholder="enter location" class="form-control" required>
+    <div class="invalid-feedback">Location should be valid</div>  
+    </div>
       <br>
       <div>
       <label for="country" class="form-label">Country</label>
-      <input type="text" name="listing[country]" placeholder="enter country" required>
+      <input type="text" name="listing[country]" placeholder="enter country" class="form-control" required>
+      <div class="invalid-feedback">Please enter the country name</div>
    </div>
       <br>
    <button class="btn btn-dark">Add</button>
