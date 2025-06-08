@@ -2,10 +2,10 @@
 <div class="row">
     <div class="col-8 offset-2">
     <h3>Create a New Listing</h3>
-   <form method="POST" action="/listings">
+   <form method="POST" action="/listings" novalidate class="needs-validation">
     <div>
     <label for="title" class="form-label">Title</label>
-    <input type="text" name="listing[title]" placeholder="enter title" class="form-control">
+    <input type="text" name="listing[title]" placeholder="enter title" class="form-control" required>
     </div>
     <br>
     <div>
@@ -15,22 +15,22 @@
     <br>
     <div>
     <label for="image" class="form-label">Image link</label>
-     <input type="text" name="listing[image]" placeholder="enter image URL/Link" class="form-control">
+     <input type="text" name="listing[image]" placeholder="enter image URL/Link" class="form-control" required>
     </div>
      <br>
      <div>
      <label for="price" class="form-label">Price</label>
-      <input type="number" name="listing[price]" placeholder="enter price">
+      <input type="number" name="listing[price]" placeholder="enter price" required>
       </div>
       <br>
       <div>
       <label for="location" class="form-label">Location</label>
-      <input type="text" name="listing[location]" placeholder="enter location">
+      <input type="text" name="listing[location]" placeholder="enter location" required>
       </div>
       <br>
       <div>
       <label for="country" class="form-label">Country</label>
-      <input type="text" name="listing[country]" placeholder="enter country">
+      <input type="text" name="listing[country]" placeholder="enter country" required>
    </div>
       <br>
    <button class="btn btn-dark">Add</button>
