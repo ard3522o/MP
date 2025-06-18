@@ -1,3 +1,4 @@
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -9,6 +10,7 @@ const ejsMate = require('ejs-mate');
 const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const {listingSchema} = require("./schema.js");
+const Review = require("./models/review.js");
 main().then(() => {
     console.log("connected to DB");
 }).catch((err) => {
@@ -71,6 +73,18 @@ app.delete("/listings/:id", wrapAsync(async (req, res)=>{
   console.log(deletedListing);
   res.redirect("/listings");
 }));
+//Reviews
+//Post Route
+app.post("/listings/:id/reviews", async (req, res) => {
+    const listing = await Listing.findById(req.params.id);
+    const newReview = new Review(req.body.review);
+    listing.reviews.push(newReview);
+    await newReview.save();
+    await listing.save();
+    console.log("new review saved");
+    res.send("new review saved");
+});
+
 
 // app.get("/testListing", async (req, res) =>{
 // let sampleListing = new Listing({
