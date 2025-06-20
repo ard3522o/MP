@@ -11,6 +11,7 @@ const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const {listingSchema, reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
+const listings = require("./routes/listing.js");
 main().then(() => {
     console.log("connected to DB");
 }).catch((err) => {
@@ -28,51 +29,9 @@ app.use(express.static(path.join(__dirname, "/public")));
 app.get("/", (req, res)=> {
     res.send("Hi I am root");
 });
-app.get("/listings", async (req, res)=>{
-  const allListings =  await Listing.find({});
-  
- // console.log(allListings.map(l => l.image)); 
-  res.render("listings/index.ejs", {allListings});
-    });
-    //new route
-app.get("/listings/new", (req, res) => {
-res.render("listings/new.ejs");
-});
-//show route
-app.get("/listings/:id", async(req, res)=>{
-let {id} = req.params;
- const listing = await Listing.findById(id).populate("reviews");
- res.render("listings/show.ejs", {listing});
-});
-//create route
-app.post("/listings", wrapAsync( async (req, res, next) => {
-let result = listingSchema.validate(req.body);
-console.log(result);
-const newListing = new Listing(req.body.listing);
-await newListing.save();
-res.redirect("/listings");
 
-}));
-//edit route
-app.get("/listings/:id/edit", wrapAsync(async (req, res) =>{
-let {id} = req.params;
- const listing = await Listing.findById(id);
- res.render("listings/edit.ejs", { listing });
-}));
-//update route
-app.put("/listings/:id", wrapAsync(async (req, res)=>{
-let {id} = req.params;
-await Listing.findByIdAndUpdate(id, {...req.body.listing});
-res.redirect(`/listings/${id}`);
-}));
+app.use("/listings", listings);
 
-//delete route
-app.delete("/listings/:id", wrapAsync(async (req, res)=>{
-  let {id} = req.params;
-  let deletedListing = await Listing.findByIdAndDelete(id);  
-  console.log(deletedListing);
-  res.redirect("/listings");
-}));
 //Reviews
 //Post Route
 app.post("/listings/:id/reviews", async (req, res) => {
