@@ -12,6 +12,7 @@ const ExpressError = require("./utils/ExpressError");
 const {listingSchema, reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
 const listings = require("./routes/listing.js");
+const reviews = require("./routes/review.js");
 main().then(() => {
     console.log("connected to DB");
 }).catch((err) => {
@@ -32,26 +33,7 @@ app.get("/", (req, res)=> {
 
 app.use("/listings", listings);
 
-//Reviews
-//Post Route
-app.post("/listings/:id/reviews", async (req, res) => {
-    const listing = await Listing.findById(req.params.id);
-    const newReview = new Review(req.body.review);
-    listing.reviews.push(newReview);
-    await newReview.save();
-    await listing.save();
-   res.redirect(`/listings/${listing._id}`);
-});
-
-//Delete Review Route
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) =>{
-    let {id, reviewId} = req.params;
- await   Listing.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
-await Review.findByIdAndDelete(reviewId);
-
-res.redirect(`/listings/${id}`);
-}));
-
+app.use("/listings/:id/reviews", reviews);
 
 // app.get("/testListing", async (req, res) =>{
 // let sampleListing = new Listing({
