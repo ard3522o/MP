@@ -31,6 +31,7 @@ let result = listingSchema.validate(req.body);
 console.log(result);
 const newListing = new Listing(req.body.listing);
 await newListing.save();
+req.flash("success", "new listing created");
 res.redirect("/listings");
 
 }));
