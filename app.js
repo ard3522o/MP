@@ -11,14 +11,14 @@ const wrapAsync = require("./utils/wrapAsync");
 const ExpressError = require("./utils/ExpressError");
 const {listingSchema, reviewSchema} = require("./schema.js");
 const Review = require("./models/review.js");
-const listings = require("./routes/listing.js");
-const reviews = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
 const session = require("express-session");
 const flash = require("connect-flash");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const User = require("./models/user.js");
-
+const userRouter = require("./routes/user.js");
 
 main().then(() => {
     console.log("connected to DB");
@@ -74,9 +74,11 @@ let registeredUser =  await User.register(fakeUser, "helloworld");
 res.send(registeredUser);
 });
 
-app.use("/listings", listings);
+app.use("/listings", listingRouter);
 
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
+
 
 // app.get("/testListing", async (req, res) =>{
 // let sampleListing = new Listing({
