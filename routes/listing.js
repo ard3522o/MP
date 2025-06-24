@@ -17,6 +17,10 @@ router.get("/", async (req, res)=>{
     });
     //new route
 router.get("/new", (req, res) => {
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
 res.render("listings/new.ejs");
 });
 //show route
@@ -27,6 +31,10 @@ let {id} = req.params;
 });
 //create route
 router.post("/", wrapAsync( async (req, res, next) => {
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
 let result = listingSchema.validate(req.body);
 console.log(result);
 const newListing = new Listing(req.body.listing);
@@ -37,12 +45,20 @@ res.redirect("/listings");
 }));
 //edit route
 router.get("/:id/edit", wrapAsync(async (req, res) =>{
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
 let {id} = req.params;
  const listing = await Listing.findById(id);
  res.render("listings/edit.ejs", { listing });
 }));
 //update route
 router.put("/:id", wrapAsync(async (req, res)=>{
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
 let {id} = req.params;
 await Listing.findByIdAndUpdate(id, {...req.body.listing});
 res.redirect(`/listings/${id}`);
