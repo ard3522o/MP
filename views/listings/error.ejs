@@ -1,6 +1,13 @@
-<% layout("/layouts/boilerplate") %>
-<div class="row">
-<div class="alert alert-danger col-6 offset-3" role="alert">
-  A simple danger alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
-</div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error <%= statusCode %></title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body class="container py-5">
+    <h1 class="text-danger">Oops! Error <%= statusCode %></h1>
+    <p class="lead"><%= message || "Something went wrong." %></p>
+    <a class="btn btn-primary mt-3" href="/">Return to Home</a>
+</body>
+</html>

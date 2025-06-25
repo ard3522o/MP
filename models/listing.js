@@ -10,12 +10,16 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-  type: String,
-  set: (v) =>
-    v === ""
-      ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60"
-      : v,
+  filename: String,
+  url: {
+    type: String,
+    set: (v) =>
+      v === ""
+        ? "https://images.unsplash.com/photo-1625505826533-5c80aca7d157?auto=format&fit=crop&w=800&q=60"
+        : v,
+  }
 },
+
   price: Number,
   location: String,
   country: String,
@@ -23,7 +27,13 @@ const listingSchema = new Schema({
 type: mongoose.Schema.Types.ObjectId,
 ref: "Review"
 
-  }]
+  }],
+
+owner: {
+  type: Schema.Types.ObjectId,
+  ref: "User",
+}
+
 });
 
 listingSchema.post("findOneAndDelete", async(listing) =>{
