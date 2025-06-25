@@ -10,8 +10,8 @@ const listingSchema = new Schema({
   },
   description: String,
   image: {
-  filename: String,
-  url: {
+   filename: String,
+   url: {
     type: String,
     set: (v) =>
       v === ""
@@ -29,10 +29,10 @@ ref: "Review"
 
   }],
 
-owner: {
-  type: Schema.Types.ObjectId,
-  ref: "User",
-}
+ owner: {
+   type: Schema.Types.ObjectId,
+   ref: "User",
+ },
 
 });
 

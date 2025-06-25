@@ -26,7 +26,9 @@ res.render("listings/new.ejs");
 //show route
 router.get("/:id", async(req, res)=>{
 let {id} = req.params;
- const listing = await Listing.findById(id).populate("reviews");
+ const listing = await Listing.findById(id).populate("reviews").populate("owner");
+// console.log(listing);
+
  res.render("listings/show.ejs", {listing});
 });
 //create route
@@ -36,8 +38,10 @@ router.post("/", wrapAsync( async (req, res, next) => {
    return res.redirect("/login");
   }
 let result = listingSchema.validate(req.body);
-console.log(result);
+// console.log(result);
 const newListing = new Listing(req.body.listing);
+newListing.owner = req.user._id;
+
 await newListing.save();
 req.flash("success", "new listing created");
 res.redirect("/listings");
