@@ -26,7 +26,7 @@ res.render("listings/new.ejs");
 //show route
 router.get("/:id", async(req, res)=>{
 let {id} = req.params;
- const listing = await Listing.findById(id).populate("reviews").populate("owner");
+ const listing = await Listing.findById(id).populate({path: "reviews", populate: {path: "author"},}).populate("owner");
 // console.log(listing);
 
  res.render("listings/show.ejs", {listing});
