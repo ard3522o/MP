@@ -18,32 +18,11 @@ router.get("/:id", listingController.showListing);
 //create route
 router.post("/", wrapAsync(listingController.createListing));
 //edit route
-router.get("/:id/edit", wrapAsync(async (req, res) =>{
-  if(!req.isAuthenticated()){
-    req.flash("error", "You must be logged in");
-   return res.redirect("/login");
-  }
-let {id} = req.params;
- const listing = await Listing.findById(id);
- res.render("listings/edit.ejs", { listing });
-}));
+router.get("/:id/edit", wrapAsync(listingController.renderEditForm));
 //update route
-router.put("/:id", wrapAsync(async (req, res)=>{
-  if(!req.isAuthenticated()){
-    req.flash("error", "You must be logged in");
-   return res.redirect("/login");
-  }
-let {id} = req.params;
-await Listing.findByIdAndUpdate(id, {...req.body.listing});
-res.redirect(`/listings/${id}`);
-}));
+router.put("/:id", wrapAsync(listingController.updateListing));
 
 //delete route
-router.delete("/:id", wrapAsync(async (req, res)=>{
-  let {id} = req.params;
-  let deletedListing = await Listing.findByIdAndDelete(id);  
-  console.log(deletedListing);
-  res.redirect("/listings");
-}));
+router.delete("/:id", wrapAsync(listingController.destroyListing));
 
 module.exports = router;

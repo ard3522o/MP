@@ -1,4 +1,6 @@
 const Listing = require("../models/listing");
+const { listingSchema } = require('../models/validateListing');
+
 
 module.exports.index = async (req, res)=>{
   const allListings =  await Listing.find({});
@@ -37,4 +39,31 @@ await newListing.save();
 req.flash("success", "new listing created");
 res.redirect("/listings");
 
+}
+
+module.exports.renderEditForm = async (req, res) =>{
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
+let {id} = req.params;
+ const listing = await Listing.findById(id);
+ res.render("listings/edit.ejs", { listing });
+}
+
+module.exports.updateListing = async (req, res)=>{
+  if(!req.isAuthenticated()){
+    req.flash("error", "You must be logged in");
+   return res.redirect("/login");
+  }
+let {id} = req.params;
+await Listing.findByIdAndUpdate(id, {...req.body.listing});
+res.redirect(`/listings/${id}`);
+}
+
+module.exports.destroyListing = async (req, res)=>{
+  let {id} = req.params;
+  let deletedListing = await Listing.findByIdAndDelete(id);  
+  console.log(deletedListing);
+  res.redirect("/listings");
 }
