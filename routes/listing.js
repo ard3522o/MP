@@ -4,6 +4,8 @@ const wrapAsync = require("../utils/wrapAsync");
 const {listingSchema, reviewSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing.js");
+const multer  = require('multer')
+const upload = multer({ dest: 'uploads/' })
 
 const listingController = require("../controllers/listings.js"); 
 
@@ -17,8 +19,10 @@ router.get("/new", listingController.renderNewForm);
 //show route
 router.get("/:id", listingController.showListing);
 //create route
- router.post("/", wrapAsync(listingController.createListing));
-
+ //router.post("/", wrapAsync(listingController.createListing));
+router.post("/", upload.single('listing[image]'), (req, res)=>{
+    res.send(req.file);
+});
 //edit route
 router.get("/:id/edit", wrapAsync(listingController.renderEditForm));
 //update route
