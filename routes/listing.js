@@ -25,7 +25,7 @@ router.get("/:id", listingController.showListing);
 //edit route
 router.get("/:id/edit", wrapAsync(listingController.renderEditForm));
 //update route
-router.put("/:id", wrapAsync(listingController.updateListing));
+router.put("/:id", upload.single('listing[image]'), wrapAsync(listingController.updateListing));
 
 //delete route
 router.delete("/:id", wrapAsync(listingController.destroyListing));
