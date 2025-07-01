@@ -5,7 +5,8 @@ const {listingSchema, reviewSchema} = require("../schema.js");
 const ExpressError = require("../utils/ExpressError");
 const Listing = require("../models/listing.js");
 const multer  = require('multer')
-const upload = multer({ dest: 'uploads/' })
+const {storage} = require("../cloudConfig.js")
+const upload = multer({storage })
 
 const listingController = require("../controllers/listings.js"); 
 
