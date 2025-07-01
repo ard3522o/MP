@@ -20,10 +20,8 @@ router.get("/new", listingController.renderNewForm);
 //show route
 router.get("/:id", listingController.showListing);
 //create route
- //router.post("/", wrapAsync(listingController.createListing));
-router.post("/", upload.single('listing[image]'), (req, res)=>{
-    res.send(req.file);
-});
+ router.post("/",  upload.single('listing[image]'),  wrapAsync(listingController.createListing));
+
 //edit route
 router.get("/:id/edit", wrapAsync(listingController.renderEditForm));
 //update route
