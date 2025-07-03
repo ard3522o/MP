@@ -52,9 +52,13 @@ module.exports.renderEditForm = async (req, res) =>{
     req.flash("error", "You must be logged in");
    return res.redirect("/login");
   }
+
 let {id} = req.params;
  const listing = await Listing.findById(id);
- res.render("listings/edit.ejs", { listing });
+ let originalImageUrl = listing.image.url;
+ originalImageUrl.replace("/upload", "/upload/h_300,w_350");
+ res.render("listings/edit.ejs", { listing, originalImageUrl });
+
 }
 
 module.exports.updateListing = async (req, res)=>{
