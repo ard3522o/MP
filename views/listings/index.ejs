@@ -15,6 +15,18 @@
     opacity: 1;
     cursor: pointer;
   }
+  .tax-info{
+    display: none;
+  }
+  .tax-toggle {
+    display: flex;
+    align-items: center;
+    border: 1px solid black;
+    border-radius: 15px;
+    height: 3rem;
+    padding: 1rem;
+    margin-left: 6rem;
+  }
 </style>
 
    <div id="filters">
@@ -38,6 +50,28 @@
 <div> <i class="fa-solid fa-chess-rook"></i></div>
  <p> Castles</p>
 </div>
+<div class="filter">
+ <div> <i class="fa-solid fa-mountain-city"></i></div>
+ <p> Iconic cities</p>
+</div>
+<div class="filter">
+ <div> <i class="fa-solid fa-mountain-sun"></i></div>
+ <p> Mountains</p>
+</div>
+<div class="filter">
+<div> <i class="fa-solid fa-chess-rook"></i></div>
+ <p> Castles</p>
+</div>
+<div class="filter">
+ <div> <i class="fa-solid fa-mountain-city"></i></div>
+ <p> Iconic cities</p>
+</div>
+<div class="filter">
+ <div> <i class="fa-solid fa-mountain-sun"></i></div>
+ <p> Mountains</p>
+</div>
+<div class="filter">
+
 <div class="tax-toggle">
 <div class="form-check-reverse form-switch">
   <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
@@ -59,7 +93,7 @@
     <p class="card-text"><%= listing.title %>
     <br>
   &#8377;<%= listing.price.toLocaleString("en-IN") %>/night</p>
-  <i>+18% GST</i>
+  <i class="tax-info">+18% GST</i>
   </div>
 </div>
     </a>
@@ -76,7 +110,14 @@
 <script >
 let taxSwitch = document.getElementById("switchCheckDefault");
 taxSwitch.addEventListener("click", () => {
-  console.log("clicked");
+ let taxInfo = document.getElementsByClassName("tax-info");
+ for(info of taxInfo){
+  if(info.style.display != "inline"){
+info.style.display = "inline";
+  }else{
+  info.style.display = "none";
+  }
+ }
 })
 </script>
 
