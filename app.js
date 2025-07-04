@@ -56,9 +56,21 @@ mongoose.connection.on("connected", () => {
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
+
+// Character encoding middleware
+app.use((req, res, next) => {
+  res.header('Content-Type', 'text/html; charset=utf-8');
+  next();
+});
+
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
-app.use(express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, "public")));
+
+// Price formatting helper
+app.locals.formatPrice = (price) => {
+  return '₹' + parseInt(price).toLocaleString('en-IN');
+};
 
 // Session Store
 const store = MongoStore.create({
@@ -105,7 +117,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// Root Route - ADDED THIS FIX
+// Root Route
 app.get("/", (req, res) => {
   res.redirect("/listings");
 });
