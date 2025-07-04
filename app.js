@@ -34,10 +34,8 @@ const dbUrl = process.env.ATLASDB_URL; // Make sure this includes your DB name!
 async function main() {
   console.log("Connecting to:", dbUrl);
   await mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 20000, // optional, increases timeout
-  });
+  serverSelectionTimeoutMS: 20000,
+});
 }
 main()
   .then(() => {
@@ -94,7 +92,7 @@ const sessionOptions = {
 
 
 app.use(session(sessionOptions));
-app.use(flash());
+ app.use(flash());
 
 // Passport Auth
 app.use(passport.initialize());
@@ -111,10 +109,9 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-
+app.use("/", userRouter);
 
 // Error Handling
 app.use((err, req, res, next) => {
