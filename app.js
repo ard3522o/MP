@@ -111,9 +111,10 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/", userRouter);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
-app.use("/", userRouter);
+
 
 // Error Handling
 app.use((err, req, res, next) => {
